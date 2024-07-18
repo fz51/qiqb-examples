@@ -23,4 +23,9 @@ public class CreateCustomCmd {
         this.name = name;
         this.email = email;
     }
+
+
+    private class Result{
+
+    }
 }

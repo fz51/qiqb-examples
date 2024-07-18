@@ -10,6 +10,7 @@ import net.qiqbframework.persithanding.PersistType;
 import net.qiqbframework.persithanding.dao.BatchBasicEntityPoDiff;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -46,12 +47,18 @@ public class CustomPersistence {
      * @param modifiedCustom
      * @param snapshotCustom
      */
-    @PersistHandler(type = PersistType.MODIFY)
+    //@PersistHandler(type = PersistType.MODIFY)
     public void doModify(Customer modifiedCustom, Customer snapshotCustom) {
         customDao.dynamicUpdateById(formatCustomPo(modifiedCustom), formatCustomPo(snapshotCustom));
         // BatchBasicEntityPoDiff.dynamicUpdate(List.of(formatCustomPo(modifiedCustom)), List.of(formatCustomPo(snapshotCustom)), customDao);
     }
 
+    @PersistHandler(type = PersistType.MODIFY)
+    public void doModify(List<Customer> modifiedCustom, List<Customer> snapshotCustom) {
+        System.out.println("批量更新");
+         customDao.dynamicUpdateById(formatCustomPo(modifiedCustom), formatCustomPo(snapshotCustom));
+        // BatchBasicEntityPoDiff.dynamicUpdate(List.of(formatCustomPo(modifiedCustom)), List.of(formatCustomPo(snapshotCustom)), customDao);
+    }
     /**
      * 删除用户
      *

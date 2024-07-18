@@ -10,7 +10,7 @@ import net.qiqb.usr.customer.application.CreateCustomCmd;
 import net.qiqb.usr.customer.application.DeleteCustomCmd;
 import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqbframework.commandhandling.CommandHandler;
-import net.qiqbframework.common.IdFactory;
+import net.qiqbframework.common.IdentifierFactory;
 import net.qiqbframework.modelling.domain.AggregateContext;
 import net.qiqbframework.modelling.domain.BizIdentifier;
 import net.qiqbframework.modelling.domain.EntityIdentifier;
@@ -61,7 +61,7 @@ public class Customer {
 
     @CommandHandler
     public Customer(CreateCustomCmd cmd) {
-        this.id = new CustomerId(IdFactory.getInstance().generateId());
+        this.id = new CustomerId(IdentifierFactory.getInstance().generate());
         this.name = cmd.getName();
         this.nickName = StrUtil.isEmpty(cmd.getNickName()) ? this.name : cmd.getNickName();
         this.email = cmd.getEmail();
@@ -72,6 +72,7 @@ public class Customer {
 
     @CommandHandler
     public void changeName(ChangeCustomNameCmd cmd) {
+        System.out.println(this.id+ " 修改名称");
         this.name = cmd.getName();
 
     }
