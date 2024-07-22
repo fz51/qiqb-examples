@@ -4,23 +4,27 @@ import lombok.Data;
 import net.qiqb.usr.custom.client.types.CustomerId;
 import net.qiqb.usr.customer.application.ChangeCustomNameCmd;
 
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 批量修改
+ */
 @Data
-public class ChangeCustomNameReq {
+public class BatchChangeCustomNameReq {
     /**
      * 待修改的客户id
      */
-    private String id;
+    private String[] id;
     /**
      * 名称
      */
     private String name;
 
 
-    public ChangeCustomNameCmd generateChangeCustomNameCmd() {
+    public List<ChangeCustomNameCmd> generateChangeCustomNameCmd() {
 
 
-        return new ChangeCustomNameCmd(new CustomerId(id), name);
+        return Arrays.stream(id).map(i -> new ChangeCustomNameCmd(new CustomerId(i), this.name)).toList();
     }
 }

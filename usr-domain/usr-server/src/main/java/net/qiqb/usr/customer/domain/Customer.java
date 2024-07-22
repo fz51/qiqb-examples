@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.qiqb.usr.custom.client.types.CustomerId;
-import net.qiqb.usr.customer.application.ChangeCustomNameCmd;
-import net.qiqb.usr.customer.application.CreateCustomCmd;
-import net.qiqb.usr.customer.application.DeleteCustomCmd;
+import net.qiqb.usr.customer.application.*;
 import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqbframework.commandhandling.CommandHandler;
 import net.qiqbframework.common.IdentifierFactory;
@@ -66,15 +64,27 @@ public class Customer {
         this.nickName = StrUtil.isEmpty(cmd.getNickName()) ? this.name : cmd.getNickName();
         this.email = cmd.getEmail();
         this.remarks = cmd.getRemarks();
-        // 默认注册即可用
-        this.enabled = true;
+        // 默认注册需要审核通过
+        this.enabled = false;
+        // 将结果设置
+        cmd.result().setId(this.id);
     }
 
     @CommandHandler
     public void changeName(ChangeCustomNameCmd cmd) {
-        System.out.println(this.id+ " 修改名称");
+        System.out.println(this.id + " 修改名称");
         this.name = cmd.getName();
 
+    }
+
+    @CommandHandler
+    public void enable(EnableCustomCmd cmd) {
+        this.enabled = true;
+    }
+
+    @CommandHandler
+    public void disable(DisableCustomCmd cmd) {
+        this.enabled = false;
     }
 
     @CommandHandler
