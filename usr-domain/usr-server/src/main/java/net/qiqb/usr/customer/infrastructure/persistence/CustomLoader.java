@@ -8,6 +8,7 @@ import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomDao;
 import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomerPo;
 import net.qiqbframework.loadhanding.LoadHandler;
+import net.qiqbframework.loadhanding.PreBatchLoadHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class CustomLoader {
 
     private final CustomDao authUserDao;
 
-    //@LoadHandler(routingBizIdentifierNaming = "id")
+    @LoadHandler(routingBizIdentifierNaming = "id")
     public Customer loadById(CustomerId id) {
         final CustomerPo customPo = authUserDao.selectPoById(id.getVal());
         if (customPo == null) {
@@ -38,15 +39,15 @@ public class CustomLoader {
         return formatCustom(customPo);
     }
 
+
     /**
      * 默认采用批量加载，可以操作执行批量操作。
      *
      * @param ids
      * @return
      */
-    @LoadHandler(routingBizIdentifierNaming = "id")
+    @PreBatchLoadHandler(routingBizIdentifierNaming = "id", routingAggregateRootType = Customer.class)
     public Collection<Customer> loadByIds(Collection<CustomerId> ids) {
-
         final List<CustomerPo> customPos = authUserDao.batchSelectPosByIds(ids.stream().map(CustomerId::getVal).toList());
         if (customPos == null || customPos.isEmpty()) {
             return null;

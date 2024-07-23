@@ -8,10 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import net.qiqbframework.mp.BasicEntityPoDaoMpImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Slf4j
 public class CustomDaoImpl extends BasicEntityPoDaoMpImpl<CustomMapper, CustomerPo> implements CustomDao {
+
+    @Override
+    public List<CustomerPo> listAll() {
+        return super.list();
+    }
 
     @Override
     public CustomerPo getByName(String name) {

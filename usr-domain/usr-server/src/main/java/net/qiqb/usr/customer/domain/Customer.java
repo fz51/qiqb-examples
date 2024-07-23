@@ -72,9 +72,7 @@ public class Customer {
 
     @CommandHandler
     public void changeName(ChangeCustomNameCmd cmd) {
-        System.out.println(this.id + " 修改名称");
         this.name = cmd.getName();
-
     }
 
     @CommandHandler

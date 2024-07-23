@@ -2,6 +2,7 @@ package net.qiqb.usr.customer.adapter.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.qiqb.usr.custom.client.types.CustomerId;
 import net.qiqb.usr.customer.adapter.web.req.BatchChangeCustomNameReq;
 import net.qiqb.usr.customer.adapter.web.req.ChangeCustomNameReq;
 import net.qiqb.usr.customer.adapter.web.req.CreatingCustomReq;
@@ -11,6 +12,8 @@ import net.qiqb.usr.customer.application.CreateCustomCmd;
 import net.qiqb.usr.customer.application.DeleteCustomCmd;
 import net.qiqb.usr.customer.application.EnableCustomCmd;
 import net.qiqb.usr.customer.infrastructure.CustomConstant;
+import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomDao;
+import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomerPo;
 import net.qiqbframework.commandhandling.gateway.CommandGateway;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +33,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomController {
 
+    private final CustomDao customDao;
 
     private final CommandGateway commandGateway;
 
@@ -48,6 +53,7 @@ public class CustomController {
 
     /**
      * 模拟批量新增客户
+     *
      * @param req
      * @return
      */
@@ -56,12 +62,13 @@ public class CustomController {
         final CreateCustomCmd cmd = req.generateCreateCustomCmd();
         List<CreateCustomCmd> mockBatch = new ArrayList<>();
         // 一次创建提交1w 用户
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             CreateCustomCmd createCustomCmd = new CreateCustomCmd(cmd.getName() + i, cmd.getEmail());
             createCustomCmd.setRemarks(cmd.getRemarks());
             mockBatch.add(createCustomCmd);
         }
-        commandGateway.sendAndWait(mockBatch);
+
+        commandGateway.batchSendAndWait(mockBatch);
         return "创建客户成功";
     }
 
@@ -88,8 +95,15 @@ public class CustomController {
     @PostMapping("/batch_change_name")
     public String batchChangeName(@RequestBody BatchChangeCustomNameReq req) {
         // 批量修改用户名称
-        final List<ChangeCustomNameCmd> cmd = req.generateChangeCustomNameCmd();
-        commandGateway.sendAndWait(cmd);
+        List<ChangeCustomNameCmd> mockBatch = new ArrayList<>();
+        for (CustomerPo customerPo : customDao.listAll()) {
+            ChangeCustomNameCmd createCustomCmd = new ChangeCustomNameCmd(new CustomerId(customerPo.getId() ), customerPo.getName()+ "01");
+
+            mockBatch.add(createCustomCmd);
+        }
+
+        commandGateway.batchSendAndWait(mockBatch);
+
         return "批量修改客户成功";
     }
 
