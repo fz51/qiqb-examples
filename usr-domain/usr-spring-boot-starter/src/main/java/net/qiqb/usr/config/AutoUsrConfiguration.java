@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 
 @Slf4j
 @Configuration
-@Import({AutoUsrCustomConfiguration.class})
+@Import({AutoUsrCustomConfiguration.class, AutoUsrPointConfiguration.class})
 public class AutoUsrConfiguration {
 
 }
