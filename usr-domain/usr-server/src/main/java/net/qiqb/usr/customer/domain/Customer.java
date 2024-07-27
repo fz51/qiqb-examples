@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.qiqb.usr.custom.client.events.CreatedCustomEvent;
 import net.qiqb.usr.custom.client.types.CustomerId;
 import net.qiqb.usr.customer.application.*;
 import net.qiqb.usr.customer.domain.type.Email;
@@ -68,6 +69,7 @@ public class Customer {
         this.enabled = false;
         // 将结果设置
         cmd.result().setId(this.id);
+        AggregateContext.addEvents(new CreatedCustomEvent(this.id));
     }
 
     @CommandHandler

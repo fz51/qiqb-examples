@@ -17,7 +17,7 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>net.qiqbframework</groupId>
+      <groupId>net.qiqb.framework</groupId>
       <artifactId>qiqb-accessing</artifactId>
       <version>${qiqbframework.version}</version>
     </dependency>

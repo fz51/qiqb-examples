@@ -17,12 +17,12 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>net.qiqbframework</groupId>
+      <groupId>net.qiqb.framework</groupId>
       <artifactId>qiqb-spring-boot-starter</artifactId>
       <version>${qiqbframework.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.qiqbframework</groupId>
+      <groupId>net.qiqb.framework</groupId>
       <artifactId>qiqb-mybatis-plus</artifactId>
       <version>${qiqbframework.version}</version>
     </dependency>
