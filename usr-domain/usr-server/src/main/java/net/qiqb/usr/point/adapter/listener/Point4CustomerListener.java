@@ -12,4 +12,5 @@ public class Point4CustomerListener {
     public void listenCreatedCustomEvent(CreatedCustomEvent createdCustomEvent){
         log.info("积分模块监听已经创建用户");
     }
+
 }

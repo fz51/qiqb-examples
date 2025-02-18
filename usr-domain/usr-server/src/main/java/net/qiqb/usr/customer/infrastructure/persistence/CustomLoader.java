@@ -8,11 +8,14 @@ import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomDao;
 import net.qiqb.usr.customer.infrastructure.persistence.dao.CustomerPo;
 import net.qiqbframework.loadhanding.LoadHandler;
-import net.qiqbframework.loadhanding.PreBatchLoadHandler;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -46,14 +49,23 @@ public class CustomLoader {
      * @param ids
      * @return
      */
-    @PreBatchLoadHandler(routingBizIdentifierNaming = "id", routingAggregateRootType = Customer.class)
-    public Collection<Customer> loadByIds(Collection<CustomerId> ids) {
+    //@LoadHandler(routingBizIdentifierNaming = "id",supportBatch = true)
+    public Map<CustomerId, Customer> loadByIds(Collection<CustomerId> ids) {
         final List<CustomerPo> customPos = authUserDao.batchSelectPosByIds(ids.stream().map(CustomerId::getVal).toList());
         if (customPos == null || customPos.isEmpty()) {
             return null;
         }
-        return customPos.stream().map(CustomLoader::formatCustom).toList();
+
+        // key:将ID分组
+        // value
+        return customPos.stream().map(CustomLoader::formatCustom)
+                .collect(Collectors.toMap(
+                        // key:将ID分组
+                        customer -> ids.stream().filter(id -> id.equals(customer.getId())).findFirst().orElse(customer.getId())
+                        // value
+                        , customer -> customer));
     }
+
 
     @LoadHandler(routingBizIdentifierNaming = "name")
     public Customer loadByName(String name) {
@@ -63,7 +75,6 @@ public class CustomLoader {
         }
         return formatCustom(customPo);
     }
-
 
     private static Customer formatCustom(CustomerPo customPo) {
         Customer custom = new Customer();

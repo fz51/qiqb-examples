@@ -1,6 +1,7 @@
 package net.qiqb.usr.customer.infrastructure.persistence.dao;
 
-import net.qiqbframework.persithanding.dao.BasicEntityPoDao;
+
+import net.qiqbframework.persisthanding.dao.BasicEntityPoDao;
 
 import java.util.List;
 

@@ -12,7 +12,6 @@ public class ChangeCustomNameCmd {
     @BizIdentifierVoucher
     private final CustomerId id;
 
-
     private final String name;
 
     public ChangeCustomNameCmd(CustomerId id, String name) {

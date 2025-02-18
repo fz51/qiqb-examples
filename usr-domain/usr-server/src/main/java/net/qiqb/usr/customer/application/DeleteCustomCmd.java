@@ -13,7 +13,6 @@ public class DeleteCustomCmd {
     @BizIdentifierVoucher
     private final CustomerId id;
 
-
     public DeleteCustomCmd(CustomerId id) {
         this.id = id;
     }

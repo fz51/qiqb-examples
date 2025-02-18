@@ -2,8 +2,10 @@ package net.qiqb.usr.customer.domain.type;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class Email {
+public class Email implements Serializable {
     private String val;
 
     public Email() {

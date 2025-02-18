@@ -4,16 +4,20 @@ import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.qiqb.usr.custom.client.events.CreatedCustomEvent;
 import net.qiqb.usr.custom.client.types.CustomerId;
 import net.qiqb.usr.customer.application.*;
 import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqbframework.commandhandling.CommandHandler;
 import net.qiqbframework.common.IdentifierFactory;
+import net.qiqbframework.messaging.task.CurrentMessageTask;
 import net.qiqbframework.modelling.domain.AggregateContext;
 import net.qiqbframework.modelling.domain.BizIdentifier;
 import net.qiqbframework.modelling.domain.EntityIdentifier;
 import net.qiqbframework.spring.stereotype.Aggregate;
+
+import java.io.Serializable;
 
 
 /**
@@ -26,7 +30,8 @@ import net.qiqbframework.spring.stereotype.Aggregate;
 @Getter
 @NoArgsConstructor
 @Setter
-public class Customer {
+@Slf4j
+public class Customer implements Serializable {
     /**
      * 用户ID
      */
@@ -35,16 +40,17 @@ public class Customer {
     /**
      * 用户名称，唯一
      */
-    @BizIdentifier
+   // @BizIdentifier
     private String name;
     /**
      *
      */
+   // @BizIdentifier
     private String nickName;
     /**
      * 邮件。有效注册只能是一个
      */
-    @BizIdentifier
+    //@BizIdentifier
     private Email email;
 
 
@@ -72,15 +78,18 @@ public class Customer {
         AggregateContext.addEvents(new CreatedCustomEvent(this.id));
     }
 
-    @CommandHandler
+    //@CommandHandler
     public void changeName(ChangeCustomNameCmd cmd) {
+        log.info("修改名称:{},{}", this.name, cmd.getName());
         this.name = cmd.getName();
-    }
 
-    @CommandHandler
+    }
+    //@CommandHandler
     public void enable(EnableCustomCmd cmd) {
         this.enabled = true;
     }
+
+
 
     @CommandHandler
     public void disable(DisableCustomCmd cmd) {

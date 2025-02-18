@@ -38,7 +38,7 @@ public class PointController {
         final CalculatePointLevelCmd cmd = req.generateCalculateVipLevelCmd();
         final Message<?> message = GenericCommandMessage.of("32");
 
-        commandGateway.send(message);
+
         final Object level = commandGateway.sendAndWait(cmd);
 
         return "积分等级为：" + level;

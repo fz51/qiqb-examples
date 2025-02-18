@@ -7,9 +7,11 @@ import net.qiqb.usr.custom.client.types.CustomerId;
 import net.qiqb.usr.customer.domain.type.Email;
 import net.qiqbframework.commandhandling.CommandResult;
 
+/**
+ *
+ */
 @Getter
 public class CreateCustomCmd implements CommandResult<CreateCustomCmd.Result> {
-
     private final String name;
 
 

@@ -62,7 +62,7 @@ public class CustomController {
         final CreateCustomCmd cmd = req.generateCreateCustomCmd();
         List<CreateCustomCmd> mockBatch = new ArrayList<>();
         // 一次创建提交1w 用户
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             CreateCustomCmd createCustomCmd = new CreateCustomCmd(cmd.getName() + i, cmd.getEmail());
             createCustomCmd.setRemarks(cmd.getRemarks());
             mockBatch.add(createCustomCmd);

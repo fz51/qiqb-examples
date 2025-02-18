@@ -12,6 +12,8 @@
 
         <module>usr-domain</module>
         <module>app-single</module>
+        <module>app-cloud-email</module>
+        <module>app-cloud-user</module>
 
     </modules>
 

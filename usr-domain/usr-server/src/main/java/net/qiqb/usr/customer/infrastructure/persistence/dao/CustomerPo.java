@@ -3,7 +3,7 @@ package net.qiqb.usr.customer.infrastructure.persistence.dao;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.qiqbframework.persithanding.dao.BasicEntityPo;
+import net.qiqbframework.persisthanding.dao.BasicEntityPo;
 
 @TableName("qiqb_examples_customer")
 @Data
